@@ -1,0 +1,21 @@
+projeto_rocketseat/
+├── .github
+│   └── preview.jpg
+├── assets
+│   ├── avatar-light.png
+│   ├── avatar.png
+│   ├── bg-desktop-light.jpg
+│   ├── bg-desktop.jpg
+│   ├── bg-mobile-light.jpg
+│   ├── bg-mobile.jpg
+│   ├── github-jairo.jpg
+│   ├── moon-stars.svg
+│   ├── perfil.jpg
+│   └── sun.svg
+├── estrutura_2026-01-12_11-33-58.txt
+├── gerador_de_estrutura.py
+├── index.html
+├── readme.md
+├── script.js
+├── style.css
+└── wrangler.toml

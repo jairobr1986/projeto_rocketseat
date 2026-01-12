@@ -1,0 +1,5 @@
+name = "projeto-rocketseat"
+compatibility_date = "2026-01-12"
+
+[assets]
+directory = "."  # Isso indica que os arquivos a serem enviados estão na raiz do projeto
