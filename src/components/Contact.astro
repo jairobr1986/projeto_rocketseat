@@ -1,0 +1,41 @@
+﻿---
+import { site } from '../config/site';
+import { whatsappFor, getMessages, type LocalizedProps } from '../i18n';
+import Icon from './Icon.astro';
+import Lines from './Lines.astro';
+type Props = LocalizedProps;
+const { locale = 'pt-BR' } = Astro.props;
+const t = getMessages(locale);
+---
+
+<section
+  id="contato"
+  class="container contact-section"
+  aria-labelledby="contact-title"
+>
+  <div class="contact-panel">
+    <div>
+      <p class="eyebrow">{t.contactEyebrow}</p>
+      <h2 id="contact-title">
+        <Lines text={t.contactTitle} />
+        <span>?</span>
+      </h2>
+      <p>{t.contactIntro}</p>
+      <a
+        class="button button-light"
+        href={whatsappFor(locale)}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {t.quote}
+        <Icon name="diagonal" />
+      </a>
+      <a class="contact-phone" href={`tel:+${site.contact.number}`}>
+        {site.contact.phone}
+      </a>
+    </div>
+    <span class="contact-star" aria-hidden="true">
+      &lt;/&gt;
+    </span>
+  </div>
+</section>

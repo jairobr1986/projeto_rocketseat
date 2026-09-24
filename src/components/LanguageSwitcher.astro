@@ -1,0 +1,69 @@
+---
+import {
+  getMessages,
+  languageInfo,
+  locales,
+  localePath,
+  type LocalizedProps,
+} from '../i18n';
+import Icon from './Icon.astro';
+type Props = LocalizedProps;
+const { locale = 'pt-BR' } = Astro.props;
+const t = getMessages(locale);
+---
+
+<details class="language-switcher" data-header-menu>
+  <summary aria-label={`${t.language}: ${languageInfo[locale].label}`}>
+    <Icon name="globe" size={17} />
+    <span>{languageInfo[locale].short}</span>
+    <span aria-hidden="true">⌄</span>
+  </summary>
+  <nav aria-label={t.language}>
+    {locales.map((language) => (
+      <a
+        href={localePath(language)}
+        lang={language}
+        hreflang={language}
+        data-language={language}
+        aria-current={language === locale ? 'page' : undefined}
+      >
+        <span>{languageInfo[language].label}</span>
+        {language === locale && <Icon name="check" size={17} />}
+      </a>
+    ))}
+  </nav>
+</details>
+<script>
+  document
+    .querySelectorAll<HTMLAnchorElement>('a[data-language]')
+    .forEach((link) => {
+      link.addEventListener('click', () => {
+        try {
+          localStorage.setItem('jbr-language', link.dataset.language!);
+          sessionStorage.removeItem('jbr-language-dismissed');
+        } catch {}
+      });
+    });
+  // Preserve a section when changing language; links still work without JavaScript.
+  function updateLanguageLinks() {
+    const hash = [
+      '#servicos',
+      '#projetos',
+      '#parceiros',
+      '#sobre',
+      '#contato',
+      '#conteudo',
+    ].includes(location.hash)
+      ? location.hash
+      : '';
+    document
+      .querySelectorAll<HTMLAnchorElement>('.language-switcher a')
+      .forEach((link) => {
+        const url = new URL(link.href);
+        url.hash = hash;
+        link.href = url.href;
+      });
+  }
+  updateLanguageLinks();
+  window.addEventListener('hashchange', updateLanguageLinks);
+</script>

@@ -1,0 +1,89 @@
+---
+import type { LocalizedProps } from '../i18n';
+import { base } from '../config/site';
+type Props = LocalizedProps;
+const { locale = 'pt-BR' } = Astro.props;
+---
+
+<aside
+  class="language-suggestion"
+  data-locale={locale}
+  data-base={base}
+  aria-label="Language / Idioma"
+  hidden
+>
+  <div>
+    <p data-language-question></p>
+    <a data-language-suggestion></a>
+  </div>
+  <button type="button" data-language-dismiss></button>
+</aside>
+<script>
+  import {
+    isLocale,
+    languageInfo,
+    localePath,
+    matchLanguage,
+  } from '../i18n/locales';
+  const banner = document.querySelector<HTMLElement>('.language-suggestion');
+  if (banner) {
+    let stored: string | null = null;
+    let dismissed: string | null = null;
+    try {
+      stored = localStorage.getItem('jbr-language');
+    } catch {}
+    try {
+      dismissed = sessionStorage.getItem('jbr-language-dismissed');
+    } catch {}
+    const locale = banner.dataset.locale;
+    const preferred = isLocale(stored)
+      ? stored
+      : matchLanguage(
+          navigator.languages.length
+            ? navigator.languages
+            : [navigator.language],
+        );
+    // Explicit localized URLs are authoritative. Only the entry page suggests a language.
+    if (preferred !== locale && !dismissed) {
+      const copy = languageInfo[preferred];
+      const link = banner.querySelector<HTMLAnchorElement>(
+        '[data-language-suggestion]',
+      )!;
+      const close = banner.querySelector<HTMLButtonElement>(
+        '[data-language-dismiss]',
+      )!;
+      banner.lang = preferred;
+      banner.querySelector('[data-language-question]')!.textContent =
+        copy.suggestion;
+      link.textContent = copy.action;
+      const hash = [
+        '#servicos',
+        '#projetos',
+        '#parceiros',
+        '#sobre',
+        '#contato',
+        '#conteudo',
+      ].includes(location.hash)
+        ? location.hash
+        : '';
+      link.href = localePath(preferred, banner.dataset.base) + hash;
+      close.textContent = copy.dismiss;
+      link.addEventListener('click', () => {
+        try {
+          localStorage.setItem('jbr-language', preferred);
+        } catch {}
+      });
+      close.addEventListener('click', () => {
+        banner.hidden = true;
+        try {
+          sessionStorage.setItem('jbr-language-dismissed', '1');
+          localStorage.setItem('jbr-language', locale!);
+        } catch {}
+        document
+          .querySelector<HTMLElement>('.language-switcher summary')
+          ?.focus();
+      });
+      banner.hidden = false;
+    }
+  }
+</script>

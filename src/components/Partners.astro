@@ -1,0 +1,67 @@
+---
+import { partners } from '../content/partners';
+import { getMessages, type LocalizedProps } from '../i18n';
+import Icon from './Icon.astro';
+import Lines from './Lines.astro';
+type Props = LocalizedProps;
+const { locale = 'pt-BR' } = Astro.props;
+const t = getMessages(locale);
+---
+
+<section
+  id="parceiros"
+  class="section partners-section"
+  aria-labelledby="partners-title"
+>
+  <div class="container">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">{t.partnersEyebrow}</p>
+        <h2 id="partners-title">
+          <Lines text={t.partnersTitle} />
+        </h2>
+      </div>
+      <p>{t.partnersIntro}</p>
+    </div>
+    <div class="partners-grid">
+      {partners.map((partner, index) => (
+        <article class="partner-card" data-partner={partner.id}>
+          <div class="partner-card-top">
+            <span class:list={['partner-icon', `partner-${partner.id}`]}>
+              <Icon name={partner.icon} size={27} />
+            </span>
+            <span class="partner-kind">
+              {t.partnersContent[index].category}
+            </span>
+          </div>
+          <h3>{partner.name}</h3>
+          <p>{t.partnersContent[index].description}</p>
+          <div
+            class:list={[
+              'partner-credit',
+              { 'partner-credit-built': partner.developedByJBR },
+            ]}
+          >
+            <Icon name={partner.developedByJBR ? 'code' : 'link'} size={17} />
+            <span>
+              {partner.developedByJBR ? t.partnerDeveloped : t.partnerPromoted}
+            </span>
+          </div>
+          <a
+            class="partner-link"
+            href={partner.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${t.partnerVisit} — ${partner.name} (${t.newTab})`}
+          >
+            <span>
+              {t.partnerVisit}
+              <small>{new URL(partner.url).hostname}</small>
+            </span>
+            <Icon name="diagonal" />
+          </a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

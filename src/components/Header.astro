@@ -1,0 +1,127 @@
+﻿---
+import { site } from '../config/site';
+import {
+  getMessages,
+  localePath,
+  whatsappFor,
+  type LocalizedProps,
+} from '../i18n';
+import Icon from './Icon.astro';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+type Props = LocalizedProps;
+const { locale = 'pt-BR' } = Astro.props;
+const t = getMessages(locale);
+const home = localePath(locale);
+const anchors = ['servicos', 'projetos', 'parceiros', 'sobre', 'contato'];
+---
+
+<header class="header">
+  <div class="container header-inner">
+    <a class="brand" href={home} aria-label={`${site.name}, ${t.home}`}>
+      <span class="brand-mark" aria-hidden="true">
+        j<span>↗</span>
+      </span>
+      <span>
+        JBR<span class="brand-light">1986</span>
+        <small>{t.brandSubtitle}</small>
+      </span>
+    </a>
+    <nav class="desktop-nav" aria-label={t.navigation}>
+      {t.nav.map((name, i) => (
+        <a href={`${home}#${anchors[i]}`}>{name}</a>
+      ))}
+    </nav>
+    <div class="header-actions">
+      <button
+        class="theme-toggle"
+        type="button"
+        aria-label={t.darkTheme}
+        data-dark-label={t.darkTheme}
+        data-light-label={t.lightTheme}
+        aria-pressed="false"
+        hidden
+      >
+        <Icon name="sun" />
+      </button>
+      <LanguageSwitcher locale={locale} />
+      <a
+        class="button button-small header-cta"
+        href={whatsappFor(locale)}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {t.quote}
+        <Icon name="diagonal" size={17} />
+      </a>
+      <details class="mobile-menu" data-header-menu>
+        <summary aria-label={t.menu}>
+          <span class="menu-label">{t.menu}</span>
+          <span aria-hidden="true">☰</span>
+        </summary>
+        <nav aria-label={t.mobileNavigation}>
+          {t.nav.map((name, i) => (
+            <a href={`${home}#${anchors[i]}`}>{name}</a>
+          ))}
+        </nav>
+      </details>
+    </div>
+  </div>
+</header>
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.theme-toggle');
+  function updateThemeButton() {
+    const dark = document.documentElement.dataset.theme === 'dark';
+    toggle?.setAttribute('aria-pressed', String(dark));
+    toggle?.setAttribute(
+      'aria-label',
+      (dark ? toggle.dataset.lightLabel : toggle.dataset.darkLabel) || 'Theme',
+    );
+  }
+  if (toggle) {
+    toggle.hidden = false;
+    updateThemeButton();
+    toggle.addEventListener('click', () => {
+      const theme =
+        document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+      document.documentElement.dataset.theme = theme;
+      try {
+        localStorage.setItem('jbr-theme', theme);
+      } catch {}
+      updateThemeButton();
+    });
+  }
+  const menus =
+    document.querySelectorAll<HTMLDetailsElement>('[data-header-menu]');
+  menus.forEach((menu) => {
+    menu.querySelectorAll('a').forEach((link) =>
+      link.addEventListener('click', () => {
+        menu.open = false;
+      }),
+    );
+    menu.addEventListener('toggle', () => {
+      if (menu.open)
+        menus.forEach((other) => {
+          if (other !== menu) other.open = false;
+        });
+    });
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape')
+      menus.forEach((menu) => {
+        if (menu.open) {
+          menu.open = false;
+          menu.querySelector('summary')?.focus();
+        }
+      });
+  });
+  document.addEventListener('click', (event) => {
+    menus.forEach((menu) => {
+      if (
+        menu.open &&
+        event.target instanceof Node &&
+        !menu.contains(event.target)
+      )
+        menu.open = false;
+    });
+  });
+</script>

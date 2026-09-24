@@ -1,0 +1,21 @@
+---
+import { site } from '../config/site';
+import Icon from './Icon.astro';
+import { getMessages, type LocalizedProps } from '../i18n';
+interface Props extends LocalizedProps {
+  label?: string;
+}
+const { locale = 'pt-BR', label = getMessages(locale).social } = Astro.props;
+---
+
+<nav class="social-links" aria-label={label}>
+  {site.social.map((social) => (
+    <a href={social.url} target="_blank" rel="noopener noreferrer">
+      <Icon name={social.name.toLowerCase()} size={21} />
+      <span>{social.name}</span>
+      <span class="social-arrow" aria-hidden="true">
+        ↗
+      </span>
+    </a>
+  ))}
+</nav>

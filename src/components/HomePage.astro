@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from './Header.astro';
+import Hero from './Hero.astro';
+import Services from './Services.astro';
+import Projects from './Projects.astro';
+import About from './About.astro';
+import Partners from './Partners.astro';
+import FAQ from './FAQ.astro';
+import Contact from './Contact.astro';
+import Footer from './Footer.astro';
+import LanguageSuggestion from './LanguageSuggestion.astro';
+import type { LocalizedProps } from '../i18n';
+type Props = LocalizedProps;
+const { locale = 'pt-BR' } = Astro.props;
+---
+
+<Layout locale={locale}>
+  <Header locale={locale} />
+  <main id="conteudo">
+    <Hero locale={locale} />
+    <Services locale={locale} />
+    <Projects locale={locale} />
+    <Partners locale={locale} />
+    <About locale={locale} />
+    <FAQ locale={locale} />
+    <Contact locale={locale} />
+  </main>
+  <Footer locale={locale} />
+  {locale === 'pt-BR' && <LanguageSuggestion locale={locale} />}
+</Layout>

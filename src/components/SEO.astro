@@ -1,0 +1,88 @@
+﻿---
+import { site, base } from '../config/site';
+import {
+  getMessages,
+  locales,
+  languageInfo,
+  localePath,
+  type LocalizedProps,
+} from '../i18n';
+interface Props extends LocalizedProps {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+}
+const { locale = 'pt-BR', noindex = false } = Astro.props;
+const t = getMessages(locale);
+const { title = t.title, description = t.description } = Astro.props;
+const canonical = Astro.site
+  ? new URL(noindex ? Astro.url.pathname : localePath(locale), Astro.site).href
+  : undefined;
+const image = Astro.site
+  ? new URL(
+      `${base}social-card${locale === 'pt-BR' ? '' : '-' + locale.toLowerCase()}.png`,
+      Astro.site,
+    ).href
+  : undefined;
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: site.name,
+  description,
+  ...(Astro.site ? { url: new URL(base, Astro.site).href } : {}),
+  telephone: `+${site.contact.number}`,
+  sameAs: site.social.map((s) => s.url),
+};
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow'} />
+{canonical && <link rel="canonical" href={canonical} />}
+{Astro.site && !noindex && (
+  <>
+    {locales.map((language) => (
+      <link
+        rel="alternate"
+        hreflang={language}
+        href={new URL(localePath(language), Astro.site).href}
+      />
+    ))}
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href={new URL(base, Astro.site).href}
+    />
+  </>
+)}
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content={languageInfo[locale].og} />
+{locales
+  .filter((language) => language !== locale)
+  .map((language) => (
+    <meta property="og:locale:alternate" content={languageInfo[language].og} />
+  ))}
+<meta property="og:site_name" content={site.name} />
+{canonical && <meta property="og:url" content={canonical} />}
+{image && (
+  <>
+    <meta property="og:image" content={image} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={t.title} />
+  </>
+)}
+<meta name="twitter:card" content={image ? 'summary_large_image' : 'summary'} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+{image && <meta name="twitter:image" content={image} />}
+<link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
+<meta name="theme-color" content="#0b3a6f" />
+{!noindex && (
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(schema).replace(/</g, '\\u003c')}
+  ></script>
+)}

@@ -1,0 +1,30 @@
+﻿---
+import { getMessages, type LocalizedProps } from '../i18n';
+import Lines from './Lines.astro';
+type Props = LocalizedProps;
+const { locale = 'pt-BR' } = Astro.props;
+const t = getMessages(locale);
+---
+
+<section class="section container faq-section" aria-labelledby="faq-title">
+  <div>
+    <p class="eyebrow">{t.faqEyebrow}</p>
+    <h2 id="faq-title">
+      <Lines text={t.faqTitle} />
+    </h2>
+    <p class="muted">
+      <Lines text={t.faqIntro} />
+    </p>
+  </div>
+  <div class="faq-list">
+    {t.questions.map((item) => (
+      <details>
+        <summary>
+          {item.question}
+          <span aria-hidden="true">+</span>
+        </summary>
+        <p>{item.answer}</p>
+      </details>
+    ))}
+  </div>
+</section>

@@ -1,0 +1,23 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { base } from '../config/site';
+---
+
+<Layout title="Página não encontrada — JBR1986" noindex>
+  <Header />
+  <main id="conteudo" class="container error-page">
+    <p class="eyebrow">ERRO 404</p>
+    <h1>
+      Essa página
+      <br />
+      ficou só na ideia.
+    </h1>
+    <p>O endereço pode ter mudado. Volte ao início para conhecer a JBR1986.</p>
+    <a class="button" href={base}>
+      Voltar ao início ↗
+    </a>
+  </main>
+  <Footer />
+</Layout>

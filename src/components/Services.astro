@@ -1,0 +1,53 @@
+﻿---
+import { getMessages, type LocalizedProps } from '../i18n';
+import Icon from './Icon.astro';
+import Lines from './Lines.astro';
+type Props = LocalizedProps;
+const { locale = 'pt-BR' } = Astro.props;
+const t = getMessages(locale);
+---
+
+<section
+  id="servicos"
+  class="section container"
+  aria-labelledby="services-title"
+>
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">{t.servicesEyebrow}</p>
+      <h2 id="services-title">
+        <Lines text={t.servicesTitle} />
+      </h2>
+    </div>
+    <p>
+      <Lines text={t.servicesIntro} />
+    </p>
+  </div>
+  <div class="services-grid">
+    {t.services.map((service) => (
+      <article class="service-card">
+        <div class="card-top">
+          <span class="service-icon">
+            <Icon name={service.icon} size={27} />
+          </span>
+          <span class="item-number">/{service.number}</span>
+        </div>
+        <h3>{service.title}</h3>
+        <p>{service.description}</p>
+        <div class="tags">
+          {service.tags.map((tag) => (
+            <span>{tag}</span>
+          ))}
+        </div>
+        <a
+          class="service-link"
+          href="#contato"
+          aria-label={`${t.talkAbout} ${service.title.toLowerCase()}`}
+        >
+          {t.talk}
+          <Icon name="diagonal" size={19} />
+        </a>
+      </article>
+    ))}
+  </div>
+</section>

@@ -1,0 +1,120 @@
+import { services } from '../content/services';
+import { projects } from '../content/projects';
+import { questions } from '../content/faq';
+
+export const ptBR = {
+  title: 'JBR1986 — Sites que dão presença ao seu negócio',
+  description:
+    'Criação de sites institucionais e landing pages com design responsivo, clareza e performance. Conheça a JBR1986 e converse sobre seu projeto.',
+  whatsappMessage:
+    'Olá! Conheci a JBR1986 pelo site e gostaria de solicitar um orçamento para meu projeto.',
+  brandSubtitle: 'DESENVOLVIMENTO WEB',
+  home: 'início',
+  skip: 'Pular para o conteúdo',
+  navigation: 'Navegação principal',
+  mobileNavigation: 'Navegação móvel',
+  menu: 'Menu',
+  nav: ['Serviços', 'Projetos', 'Parceiros', 'Sobre', 'Contato'],
+  darkTheme: 'Ativar tema escuro',
+  lightTheme: 'Ativar tema claro',
+  language: 'Escolher idioma',
+  quote: 'Solicitar orçamento',
+  explore: 'Explorar projetos',
+  talk: 'Vamos conversar',
+  talkAbout: 'Conversar sobre',
+  social: 'Redes sociais',
+  follow: 'Acompanhe a JBR1986 nas redes',
+  connect: 'Conecte-se com a JBR1986',
+  chat: 'Conversar com a JBR1986 pelo WhatsApp',
+  heroEyebrow: 'DESENVOLVIMENTO WEB PARA EMPRESAS',
+  heroTitle: ['Seu negócio.', 'Seu próximo', 'nível digital.'],
+  heroDescription:
+    'Sites profissionais que unem design e tecnologia para conectar sua empresa a novos clientes.',
+  artLabel:
+    'Conceito de uma interface digital da JBR1986 adaptada para computador e celular',
+  artNav: 'Design. Código. Conexão.',
+  artKicker: 'SUA EMPRESA, CONECTADA.',
+  artTitle: ['Uma ideia.', 'Infinitas', 'possibilidades.'],
+  artStart: 'Comece seu projeto',
+  artTiles: ['Responsivo', 'Design próprio', 'Foco no negócio'],
+  artPhoneCaption: 'SEU NEGÓCIO EM CADA TELA',
+  artPhoneTitle: ['Digital.', 'Simples.', 'Seu.'],
+  artBadge: 'Pensado para o celular',
+  artCaption: 'CONCEITO DE INTERFACE',
+  principlesIntro: 'Tecnologia a favor do seu negócio',
+  principles: [
+    'Experiência em cada tela',
+    'Design com identidade',
+    'Contato a um toque',
+  ],
+  servicesEyebrow: '01 / O QUE FAZEMOS',
+  servicesTitle: 'Seu próximo passo\ncomeça com um bom site.',
+  servicesIntro:
+    'Cada negócio tem uma história.\nO seu site precisa saber contá-la.',
+  services,
+  projectsEyebrow: '02 / IDEIAS NA PRÁTICA',
+  projectsTitle: 'Do código\npara a experiência.',
+  projectsIntro:
+    'Uma seleção de projetos de estudo.\nDiferentes propostas, a mesma vontade de criar.',
+  openProject: 'Abrir projeto',
+  newTab: 'em nova aba',
+  study: 'ESTUDO',
+  studyProject: 'Projeto de estudo',
+  museumCaption: 'ARTE. MEMÓRIA. CULTURA.',
+  modelCaption: 'PORTFÓLIO / MODELO',
+  modelNote: 'UM ESTUDO DE APRESENTAÇÃO',
+  gameCaption: 'ESCOLHA. TENTE. DESCUBRA.',
+  play: 'JOGAR',
+  cover: 'CAPA ILUSTRATIVA',
+  projects,
+  partnersEyebrow: '03 / CONEXÕES QUE CRESCEM',
+  partnersTitle: 'Conheça quem faz parte\nda nossa rede.',
+  partnersIntro: 'Negócios que apoiamos e que vale a pena conhecer.',
+  partnerDeveloped: 'Site desenvolvido pela JBR1986',
+  partnerPromoted: 'Empresa parceira',
+  partnerVisit: 'Visitar site',
+  partnersContent: [
+    {
+      category: 'Vida no campo',
+      description:
+        'Memórias em família e água de coco natural, direto do Sítio Canto da Siriema.',
+    },
+    {
+      category: 'Construção e reformas',
+      description:
+        'Construção, reformas e pequenos reparos em Limeira e região. Do alicerce ao acabamento.',
+    },
+    {
+      category: 'Soluções de impressão',
+      description:
+        'Venda e manutenção de plotters, tintas e peças para quem trabalha com impressão.',
+    },
+  ],
+  aboutVisual: 'ESTRATÉGIA + DESIGN + DESENVOLVIMENTO',
+  aboutMotto: 'Presença digital\ncom propósito.',
+  aboutEyebrow: '04 / POR TRÁS DA JBR1986',
+  aboutTitle: 'Tecnologia com\num olhar para\no seu negócio.',
+  aboutParagraphs: [
+    'A JBR1986 desenvolve sites que unem design e tecnologia para apresentar empresas com clareza. Da estrutura à experiência no celular, cada detalhe tem um propósito: conectar seu negócio às pessoas.',
+    'O ponto de partida é entender o que você faz e o que precisa comunicar. A partir daí, design e desenvolvimento dão forma à sua presença digital.',
+  ],
+  aboutLink: 'Vamos falar sobre sua ideia',
+  faqEyebrow: '05 / ANTES DE COMEÇAR',
+  faqTitle: 'Boas perguntas.\nRespostas claras.',
+  faqIntro: 'Para você dar o próximo passo\ncom mais confiança.',
+  questions,
+  contactEyebrow: 'SEU PRÓXIMO CAPÍTULO COMEÇA AQUI',
+  contactTitle: 'Vamos dar presença\nà sua próxima ideia',
+  contactIntro: 'Conte sobre o seu negócio. Vamos conversar sobre o seu site.',
+  footerMotto: 'Ideias bem apresentadas.\nNegócios bem conectados.',
+  rights: 'Todos os direitos reservados.',
+  top: 'De volta ao topo',
+  footerNote: 'Design & código com propósito.',
+  errorTitle: 'Página não encontrada — JBR1986',
+  errorLabel: 'ERRO 404',
+  errorHeading: 'Essa página\nficou só na ideia.',
+  errorDescription:
+    'O endereço pode ter mudado. Volte ao início para conhecer a JBR1986.',
+  errorBack: 'Voltar ao início',
+};
+export type Messages = typeof ptBR;

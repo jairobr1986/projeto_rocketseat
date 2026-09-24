@@ -1,0 +1,49 @@
+﻿---
+import { site } from '../config/site';
+import {
+  getMessages,
+  localePath,
+  whatsappFor,
+  type LocalizedProps,
+} from '../i18n';
+import Icon from './Icon.astro';
+import Lines from './Lines.astro';
+import SocialLinks from './SocialLinks.astro';
+type Props = LocalizedProps;
+const { locale = 'pt-BR' } = Astro.props;
+const t = getMessages(locale);
+---
+
+<footer class="footer container">
+  <div class="footer-top">
+    <a class="brand" href={localePath(locale)}>
+      <span class="brand-mark" aria-hidden="true">
+        j<span>↗</span>
+      </span>
+      <span>
+        JBR<span class="brand-light">1986</span>
+        <small>{t.brandSubtitle}</small>
+      </span>
+    </a>
+    <p>
+      <Lines text={t.footerMotto} />
+    </p>
+    <SocialLinks locale={locale} />
+  </div>
+  <div class="footer-bottom">
+    <span>
+      © {new Date().getFullYear()} {site.name}. {t.rights}
+    </span>
+    <a href="#conteudo">{t.top} ↑</a>
+    <span>{t.footerNote}</span>
+  </div>
+</footer>
+<a
+  class="floating-whatsapp"
+  href={whatsappFor(locale)}
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label={t.chat}
+>
+  <Icon name="whatsapp" size={25} />
+</a>
